@@ -1,60 +1,25 @@
-// Time: 29/01/2022 22:36:01
-// Url: https://cses.fi/problemset/task/1625
-// Time Limit: 1000
-// Memory Limit: 512
-// User: Rahkin
+// Problem: Grid Paths
+// Time: 02/02/2022 01:47:33
+// Time Limit: 1000 ms
+// Memory Limit: 512 mb
+// My CLI Parser Github Link: https://github.com/NikharManchanda/Cp-Test-Case-Checker-and-Parser
+// Author: Rahkin
+
+// Sit Down Bitch, Be humble
 
 #include "bits/stdc++.h"
 using namespace std;
 /*------------------------------------------------------------*/
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-typedef tree<int, null_type, less<int>, rb_tree_tag,
-						 tree_order_statistics_node_update> ordered_set;
+//#include<ext/pb_ds/assoc_container.hpp>
+//#include<ext/pb_ds/tree_policy.hpp>
+//using namespace __gnu_pbds;
+//typedef tree<int, null_type, less<int>, rb_tree_tag,
+//        tree_order_statistics_node_update> ordered_set;
 /*------------------------------------------------------------*/
-void __print(int x) { cerr << x; }
-void __print(long x) { cerr << x; }
-void __print(long long x) { cerr << x; }
-void __print(unsigned x) { cerr << x; }
-void __print(unsigned long x) { cerr << x; }
-void __print(unsigned long long x) { cerr << x; }
-void __print(float x) { cerr << x; }
-void __print(double x) { cerr << x; }
-void __print(long double x) { cerr << x; }
-void __print(char x) { cerr << '\'' << x << '\''; }
-void __print(const char* x) { cerr << '\"' << x << '\"'; }
-void __print(const string& x) { cerr << '\"' << x << '\"'; }
-void __print(bool x) { cerr << (x ? "true" : "false"); }
-template<typename T, typename V>
-void __print(const pair<T, V>& x)
-{
-	cerr << '{';
-	__print(x.first);
-	cerr << ',';
-	__print(x.second);
-	cerr << '}';
-}
-template<typename T>
-void __print(const T& x)
-{
-	int f = 0;
-	cerr << '{';
-	for (auto& i : x) cerr << (f++ ? "," : ""), __print(i);
-	cerr << "}";
-}
-void _print() { cerr << "]\n"; }
-template<typename T, typename... V>
-void _print(T t, V... v)
-{
-	__print(t);
-	if (sizeof...(v)) cerr << ", ";
-	_print(v...);
-}
 #ifndef ONLINE_JUDGE
-#define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
+#include "debug.h"
 #else
-#define debug(x...)
+#define debug(...) 42
 #endif
 /*------------------------------------------------------------------*/
 #define int               long long
@@ -95,115 +60,66 @@ const int N2 = 2e6+5;
 
 int dx[8] = {1, 0, -1, 0, 1, 1, -1, -1};
 int dy[8] = {0, 1, 0, -1, -1, 1, 1, -1};
-
-template<typename T, typename T1> T amax(T& a, T1 b)
-{
-	if (b>a)a = b;
-	return a;
-}
-template<typename T, typename T1> T amin(T& a, T1 b)
-{
-	if (b<a)a = b;
-	return a;
-}
 /*----------------------------------------------------------*/
 void setIO(const string& s)
 {
 	freopen((s+".in").c_str(), "r", stdin);
 	freopen((s+".out").c_str(), "w", stdout);
 }
-void localIP()
+void input()
 {
 #ifndef ONLINE_JUDGE
 	freopen("input.txt", "r", stdin);
 #endif
 }
-void localOP()
+void local()
 {
 #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
 }
-void localEr()
-{
-#ifndef ONLINE_JUDGE
-	freopen("error.txt", "w", stderr);
-#endif
-}
-void init()
+/*--------------------------------------------------------*/
+
+signed main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
-}
-/*--------------------------------------------------------*/
 
-string s;
-int ans;
-bool vis[7][7];
-bool e(int x, int y)
-{
-	return x<7 && x>=0 && y>=0 && y<7 && !vis[x][y];
-}
-void fun(int x, int y, int idx)
-{
-	int i = x;
-	int j = y;
-	if (x==6 && y==0)
-	{
-		if (idx==48)
-			ans++;
-		return;
-	}
-	vis[x][y] = 1;
-	if (s[idx]=='?' || s[idx]=='R')
-	{
-		if (y+1<7 && !vis[x][y+1])
-		{
-			if (!(!e(i, j+2) && e(i-1, j+1) && e(i+1, j+1)))
-				fun(x, y+1, idx+1);
-		}
-	}
-	if (s[idx]=='?' || s[idx]=='L')
-	{
-		if (y>0 && !vis[x][y-1])
-		{
-			if (!(!e(i, j-2) && e(i-1, j-1) && e(i+1, j-1)))
-				fun(x, y-1, idx+1);
-		}
-	}
-	if (s[idx]=='?' || s[idx]=='U')
-	{
-		if (x>0 && !vis[x-1][y])
-		{
-			if (!(!e(i-2, j) && e(i-1, j-1) && e(i-1, j+1)))
-				fun(x-1, y, idx+1);
-		}
-	}
-	if (s[idx]=='?' || s[idx]=='D')
-	{
-		if (x<6 && !vis[x+1][y])
-		{
-			if (!(!e(i+2, j) && e(i+1, j-1) && e(i+1, j+1)))
-				fun(x+1, y, idx+1);
-		}
-
-	}
-
-	vis[x][y] = 0;
-
-}
-signed main()
-{
-	init();
-	localIP();
+	input();
 
 	int t = 1;
 //	cin >> t;
 	for (int test = 1; test<=t; test++)
 	{
-		cin >> s;
-		fun(0, 0, 0);
-		cout << ans;
+		int n;
+		cin >> n;
+		char c[n][n];
+		for (int i = 0; i<n; i++)
+			for (int j = 0; j<n; j++)
+				cin >> c[i][j];
+		int dp[n][n];
+		for (int i = 0; i<n; i++)
+		{
+			for (int j = 0; j<n; j++)
+			{
+				dp[i][j] = 0;
+				if (c[i][j]=='*')
+					continue;
+				if (!i && !j)dp[i][j] = 1;
+				if (i>=1 && c[i-1][j]!='*')
+				{
+					dp[i][j] += dp[i-1][j];
+					dp[i][j] %= mod;
+				}
+				if (j>=1 && c[i][j-1]!='*')
+				{
+					dp[i][j] += dp[i][j-1];
+					dp[i][j] %= mod;
+				}
+			}
+		}
+		cout << dp[n-1][n-1];
 	}
 
 	return 0;

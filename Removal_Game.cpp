@@ -101,7 +101,7 @@ signed main()
 			sum += x;
 		int dp[n][n];
 		// dp[i][j] stores score1-score2 if 1 starts the game
-		// else if 2 starts it , it will be score2-score1.
+		// else if 2 starts it , it will be score2-score1 b/w intervals i,j.
 		// We have to maximaize score1-score2.
 		// when we select a[i] then we have to give turn to P2 thus dp[i+1][j]
 		// is score1 -score2 but since player 2 starts it [i+1,j] will be -dp[i+1][j]
@@ -112,7 +112,7 @@ signed main()
 			{
 				if (l==r)
 					dp[l][r] = a[l];
-				else
+				else //a[l]+-(score2-score1){As we want total score1-score2 to be max}
 					dp[l][r] = max(a[l]-dp[l+1][r], a[r]-dp[l][r-1]);
 			}
 		}
